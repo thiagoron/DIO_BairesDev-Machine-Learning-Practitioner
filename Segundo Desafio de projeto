@@ -1,0 +1,40 @@
+*Segundo desafío de projeto
+Seguindo o exemplo do algoritmo de binarização apresentado em nossa última aula, realize a implementação em Python 
+para transformar uma imagem colorida para níveis de cinza (0 a 255) e para binarizada (0 e 255), preto e branco.
+
+Código
+
+import tkinter as tk
+from tkinter import filedialog
+import cv2
+import numpy as np
+
+def selecionar_imagem():
+    root = tk.Tk()
+    root.withdraw()
+    arquivo = filedialog.askopenfilename()
+    return arquivo
+
+def converter_para_tons_de_cinza(imagem):
+    imagem_cinza = cv2.cvtColor(imagem, cv2.COLOR_BGR2GRAY)
+    return imagem_cinza
+
+def binarizar_imagem(imagem_cinza):
+    _, imagem_binarizada = cv2.threshold(imagem_cinza, 127, 255, cv2.THRESH_BINARY)
+    return imagem_binarizada
+
+def salvar_imagens(imagem_original, imagem_cinza, imagem_binarizada):
+    cv2.imwrite('imagem_original.jpg', imagem_original)
+    cv2.imwrite('imagem_cinza.jpg', imagem_cinza)
+    cv2.imwrite('imagem_binarizada.jpg', imagem_binarizada)
+
+def main():
+    arquivo = selecionar_imagem()
+    imagem_original = cv2.imread(arquivo)
+    imagem_cinza = converter_para_tons_de_cinza(imagem_original)
+    imagem_binarizada = binarizar_imagem(imagem_cinza)
+    salvar_imagens(imagem_original, imagem_cinza, imagem_binarizada)
+
+if __name__ == '__main__':
+    main()
+
